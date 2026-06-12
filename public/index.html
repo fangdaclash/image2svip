@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>image2svip</title>
+    <link rel="icon" type="image/svg+xml" href="/img/shua.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <button class="mobile-settings-btn" id="mobileSettingsBtn" aria-label="设置">
+      <svg viewBox="0 0 24 24">
+        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    </button>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="访问配置">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <img src="/img/spark.svg" alt="" />
+          </div>
+          <div class="brand-text">
+            <span>FLOW API</span>
+            <strong>image2svip</strong>
+          </div>
+        </div>
+
+        <section class="config-section">
+          <h2>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+            </svg>
+            <span>访问配置</span>
+          </h2>
+
+          <div>
+            <label for="apiKey">API Key</label>
+            <input id="apiKey" type="password" autocomplete="off" placeholder="sk-..." />
+          </div>
+
+          <div class="field-row">
+            <label for="model">模型</label>
+            <button class="icon-button small" id="modelInfoButton" title="查看模型信息" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4" />
+                <path d="M12 8h.01" />
+              </svg>
+            </button>
+          </div>
+          <select id="model">
+            <option value="codex-gpt-image-2">codex-gpt-image-2</option>
+            <option value="gpt-image-2">gpt-image-2</option>
+          </select>
+
+          <div class="button-row">
+            <button id="saveKey" class="button primary" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z" />
+                <path d="M17 21v-8H7v8" />
+                <path d="M7 3v5h8" />
+              </svg>
+              <span>保存</span>
+            </button>
+            <button id="clearKey" class="button secondary" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 6h18" />
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+              </svg>
+              <span>清除</span>
+            </button>
+          </div>
+
+          <div class="key-status" id="keyStatus">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+            </svg>
+            <span>等待保存 Key</span>
+          </div>
+        </section>
+
+        <div class="buy-tip">
+          获取 API Key，可到<br />
+          <a href="https://www.zyflow.cn" target="_blank" rel="noopener">https://www.zyflow.cn</a>
+        </div>
+
+        <button id="generate" class="generate-button" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 4V2" />
+            <path d="M15 16v-2" />
+            <path d="M8 9h2" />
+            <path d="M20 9h2" />
+            <path d="m17.8 6.2 1.4-1.4" />
+            <path d="m10.8 13.2 1.4-1.4" />
+            <path d="m17.8 11.8 1.4 1.4" />
+            <path d="M3 21 14 10" />
+          </svg>
+          <span>生成图像</span>
+        </button>
+      </aside>
+
+      <main class="workspace">
+        <section class="prompt-section">
+          <div class="section-title">
+            <label for="prompt">提示词</label>
+            <span id="counter">0 字</span>
+          </div>
+          <textarea id="prompt" placeholder="请输入你要生成的图像内容..."></textarea>
+        </section>
+
+        <section class="drop-zone" id="dropZone">
+          <input id="imageInput" type="file" accept="image/*" multiple />
+          <div class="drop-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 5a2 2 0 0 1 2-2h5l2 3h5a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Z" />
+              <path d="M12 11v6" />
+              <path d="m9 14 3-3 3 3" />
+            </svg>
+          </div>
+          <div class="drop-zone-text">
+            <strong>图生图 / 多图编辑</strong>
+            <span>点击选择或拖拽图片到这里</span>
+          </div>
+        </section>
+
+        <div class="thumb-strip" id="thumbStrip" hidden></div>
+        <div class="generation-error" id="generationError" hidden></div>
+
+        <section class="canvas-panel" aria-live="polite">
+          <div class="canvas-grid" aria-hidden="true"></div>
+          <div class="canvas-status" id="canvasStatus">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 4V2" />
+              <path d="M15 16v-2" />
+              <path d="M8 9h2" />
+              <path d="M20 9h2" />
+              <path d="m17.8 6.2 1.4-1.4" />
+              <path d="m10.8 13.2 1.4-1.4" />
+              <path d="m17.8 11.8 1.4 1.4" />
+              <path d="M3 21 14 10" />
+            </svg>
+            <span>等待生成</span>
+          </div>
+          <div class="progress-pill" id="progressPill">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+            </svg>
+            <span>待生成</span>
+          </div>
+          <div class="result-grid" id="resultGrid"></div>
+        </section>
+      </main>
+
+      <aside class="right-panel" id="rightPanel" aria-label="输出参数和历史记录">
+        <section class="panel-section parameter-section">
+          <h2>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            输出参数
+          </h2>
+
+          <div class="control-group is-open" data-control-group="size">
+            <button class="control-header" type="button" aria-expanded="true">
+              <span>
+                <strong>尺寸</strong>
+                <em id="sizeText">智能</em>
+              </span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            <div class="option-grid size-grid" id="sizeOptions">
+              <button class="option-tile is-active" type="button" data-value="auto" data-label="智能" data-pixels="1536 x 1024">
+                <strong>智能</strong>
+                <span>自动</span>
+              </button>
+              <button class="option-tile" type="button" data-value="1792x768" data-label="21:9" data-pixels="1792 x 768">
+                <strong>21:9</strong>
+                <span>超宽</span>
+              </button>
+              <button class="option-tile" type="button" data-value="1536x864" data-label="16:9" data-pixels="1536 x 864">
+                <strong>16:9</strong>
+                <span>横屏</span>
+              </button>
+              <button class="option-tile" type="button" data-value="1536x1024" data-label="3:2" data-pixels="1536 x 1024">
+                <strong>3:2</strong>
+                <span>横图</span>
+              </button>
+              <button class="option-tile" type="button" data-value="1152x864" data-label="4:3" data-pixels="1152 x 864">
+                <strong>4:3</strong>
+                <span>横图</span>
+              </button>
+              <button class="option-tile" type="button" data-value="1024x1024" data-label="1:1" data-pixels="1024 x 1024">
+                <strong>1:1</strong>
+                <span>方图</span>
+              </button>
+              <button class="option-tile" type="button" data-value="864x1152" data-label="3:4" data-pixels="864 x 1152">
+                <strong>3:4</strong>
+                <span>竖图</span>
+              </button>
+              <button class="option-tile" type="button" data-value="1024x1536" data-label="2:3" data-pixels="1024 x 1536">
+                <strong>2:3</strong>
+                <span>竖图</span>
+              </button>
+              <button class="option-tile" type="button" data-value="768x1792" data-label="9:16" data-pixels="768 x 1792">
+                <strong>9:16</strong>
+                <span>竖屏</span>
+              </button>
+            </div>
+            <select id="size" aria-hidden="true" tabindex="-1">
+              <option value="auto">智能</option>
+              <option value="1792x768">21:9</option>
+              <option value="1536x864">16:9</option>
+              <option value="1536x1024">3:2</option>
+              <option value="1152x864">4:3</option>
+              <option value="1024x1024">1:1</option>
+              <option value="864x1152">3:4</option>
+              <option value="1024x1536">2:3</option>
+              <option value="768x1792">9:16</option>
+            </select>
+          </div>
+
+          <div class="control-group is-open" data-control-group="count">
+            <button class="control-header" type="button" aria-expanded="true">
+              <span>
+                <strong>数量</strong>
+                <em id="countText">1 张</em>
+              </span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            <div class="option-grid count-grid" id="countOptions">
+              <button class="option-tile is-active" type="button" data-value="1">1</button>
+              <button class="option-tile" type="button" data-value="2">2</button>
+              <button class="option-tile" type="button" data-value="3">3</button>
+              <button class="option-tile" type="button" data-value="4">4</button>
+              <button class="option-tile" type="button" data-value="5">5</button>
+              <button class="option-tile" type="button" data-value="6">6</button>
+              <button class="option-tile" type="button" data-value="7">7</button>
+              <button class="option-tile" type="button" data-value="8">8</button>
+              <button class="option-tile" type="button" data-value="9">9</button>
+              <button class="option-tile" type="button" data-value="10">10</button>
+            </div>
+            <select id="count" aria-hidden="true" tabindex="-1">
+              <option value="1">1 张</option>
+              <option value="2">2 张</option>
+              <option value="3">3 张</option>
+              <option value="4">4 张</option>
+              <option value="5">5 张</option>
+              <option value="6">6 张</option>
+              <option value="7">7 张</option>
+              <option value="8">8 张</option>
+              <option value="9">9 张</option>
+              <option value="10">10 张</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel-section history-section">
+          <div class="history-heading">
+            <h2>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              历史记录
+            </h2>
+            <button id="clearHistory" type="button">清空</button>
+          </div>
+          <div class="history-list" id="historyList">
+            <p>暂无图像</p>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="model-modal" id="modelModal">
+      <form method="dialog" class="modal-card">
+        <button class="modal-close" value="close" aria-label="关闭" type="submit">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+
+        <header class="modal-header">
+          <div class="openai-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2.5a4.5 4.5 0 0 1 4.42 3.68 4.5 4.5 0 0 1 2.1 8.07 4.5 4.5 0 0 1-6.52 6.14 4.5 4.5 0 0 1-6.42-3.58 4.5 4.5 0 0 1-.1-8.43A4.5 4.5 0 0 1 12 2.5Z" />
+              <path d="M8.3 8.6 12 6.5l3.7 2.1v4.2L12 15l-3.7-2.2V8.6Z" />
+            </svg>
+          </div>
+          <h2 id="modalModelName">codex-gpt-image-2</h2>
+          <span class="copy-dot" title="复制模型名"></span>
+        </header>
+
+        <section class="model-block">
+          <div class="block-heading">
+            <span class="round-icon blue">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4" />
+                <path d="M12 8h.01" />
+              </svg>
+            </span>
+            <div>
+              <h3>基本信息</h3>
+              <p>模型的详细描述和基本特性</p>
+            </div>
+          </div>
+          <p class="empty-desc">暂无模型描述</p>
+        </section>
+
+        <section class="model-block">
+          <div class="block-heading">
+            <span class="round-icon purple">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10 13a5 5 0 0 0 7.54.54l1.88-1.88a5 5 0 0 0-7.08-7.08L11.26 5.66" />
+                <path d="M14 11a5 5 0 0 0-7.54-.54L4.58 12.34a5 5 0 0 0 7.08 7.08l1.08-1.08" />
+              </svg>
+            </span>
+            <div>
+              <h3>API端点</h3>
+              <p>模型支持的接口端点信息</p>
+            </div>
+          </div>
+          <div class="endpoint-line">
+            <span class="green-dot"></span>
+            <span>openai:</span>
+            <code>/v1/chat/completions</code>
+            <strong>POST</strong>
+          </div>
+        </section>
+
+        <section class="model-block">
+          <div class="block-heading">
+            <span class="round-icon amber">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M8.5 10.5h7" />
+                <path d="M9.5 13.5h5" />
+                <path d="M12 7.5v9" />
+              </svg>
+            </span>
+            <div>
+              <h3>分组价格</h3>
+              <p>不同用户分组的价格信息</p>
+            </div>
+          </div>
+          <p class="route-line">auto分组调用链路 → <span>default分组</span></p>
+          <div class="pricing-table" id="pricingTable"></div>
+        </section>
+      </form>
+    </dialog>
+
+    <dialog class="image-preview-modal" id="imagePreviewModal">
+      <button class="preview-close" id="previewClose" type="button" aria-label="关闭预览">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+      <img id="previewImage" alt="放大预览" />
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
