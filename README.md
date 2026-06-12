@@ -23,11 +23,15 @@ Cross-platform desktop application for AI-powered image creation with an elegant
 
 ---
 
-## About
+## About image2svip
 
 **image2svip** is a premium cross-platform image generation workstation designed for creators, designers, and AI enthusiasts. It bridges powerful AI models with an intuitive user experience, enabling stunning visual content creation through natural language.
 
-### Why image2svip?
+### What is image2svip?
+
+image2svip is a professional-grade desktop application that allows you to generate high-quality images using AI models. Whether you're a designer needing quick mockups, a content creator looking for unique visuals, or an AI enthusiast exploring image generation, image2svip provides the tools you need in a beautiful, easy-to-use interface.
+
+### Why Choose image2svip?
 
 | Problem | Solution |
 |---------|----------|
@@ -36,6 +40,14 @@ Cross-platform desktop application for AI-powered image creation with an elegant
 | Platform lock-in | Native apps for Mac, Windows, Linux, Android |
 | Poor UX | Beautiful glassmorphism UI with smooth animations |
 | Single image workflow | Batch generation (1-10 images) with history |
+
+### Key Benefits
+
+- **Privacy First** - All your data stays on your device
+- **No Vendor Lock-in** - Works with any OpenAI-compatible API
+- **Cross-Platform** - One app for all your devices
+- **Professional Quality** - Enterprise-grade features and reliability
+- **Open Source** - Free to use, modify, and distribute
 
 ---
 
