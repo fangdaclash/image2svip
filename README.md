@@ -1,119 +1,207 @@
-# image2svip - 跨平台图像生成应用
+<p align="center">
+  <img src="img/spark.svg" width="80" height="80" alt="image2svip logo">
+</p>
 
-支持 Mac、Windows、Linux 桌面端和 Android APK。
+<h1 align="center">image2svip</h1>
 
-## 快速开始
+<p align="center">
+  <strong>AI-Powered Image Generation Desktop Application</strong>
+</p>
 
-### 安装依赖
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="version">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license">
+  <img src="https://img.shields.io/badge/platform-Mac%20%7C%20Windows%20%7C%20Linux%20%7C%20Android-brightgreen.svg" alt="platform">
+  <img src="https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg" alt="node">
+</p>
+
+<p align="center">
+  A modern, cross-platform image generation application with a stunning dark UI, built with Electron and Capacitor. Generate images using GPT Image models with an elegant, professional interface.
+</p>
+
+---
+
+## Features
+
+- **AI Image Generation** - Generate images using `gpt-image-2` and `codex-gpt-image-2` models
+- **Image-to-Image** - Upload reference images for guided generation
+- **Batch Processing** - Generate up to 10 images simultaneously
+- **Multiple Aspect Ratios** - 9 preset sizes from 21:9 ultrawide to 9:16 portrait
+- **Local Storage** - All generated images stored locally via IndexedDB
+- **History Management** - Browse and revisit previous generations
+- **Cross-Platform** - Native apps for Mac, Windows, Linux, and Android
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshot-dark.png" width="800" alt="Dark Mode Screenshot">
+</p>
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18 or higher
+- npm or yarn
+- API Key from [zyflow.cn](https://www.zyflow.cn)
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/fangdaclash/image2svip.git
+cd image2svip
+
+# Install dependencies
 npm install
 ```
 
-### Web 模式（开发用）
+### Run (Web Mode)
 
 ```bash
 npm start
 ```
 
-访问 http://localhost:4173
+Open [http://localhost:4173](http://localhost:4173) in your browser.
 
-### Electron 桌面模式（开发）
+### Run (Electron Desktop)
 
 ```bash
 npm run electron:dev
 ```
 
-## 打包构建
+## Building for Production
 
-### Mac (.dmg)
+### Desktop Applications
 
 ```bash
+# macOS (.dmg)
 npm run build:mac
-```
 
-输出位置：`dist/`
-
-### Windows (.exe)
-
-```bash
+# Windows (.exe)
 npm run build:win
-```
 
-输出位置：`dist/`
-
-### Linux (AppImage/deb)
-
-```bash
+# Linux (AppImage / .deb)
 npm run build:linux
+
+# All platforms
+npm run build:all
 ```
+
+Output directory: `dist/`
 
 ### Android APK
 
-需要先安装 Android Studio 和 Capacitor CLI：
-
 ```bash
-# 安装 Capacitor CLI
+# Install Capacitor CLI globally
 npm install -g @capacitor/cli
 
-# 初始化 Capacitor（首次）
+# Initialize Capacitor (first time only)
 npx cap init
 
-# 添加 Android 平台
+# Add Android platform
 npx cap add android
 
-# 同步 Web 资源到 Android
+# Sync web assets
 npx cap sync
 
-# 打开 Android Studio
+# Open in Android Studio
 npx cap open android
 ```
 
-在 Android Studio 中构建 APK。
+Build the APK from Android Studio.
 
-## 项目结构
+## Project Structure
 
 ```
 image2svip/
-├── electron/           # Electron 主进程
-│   ├── main.js        # 主进程入口
-│   └── preload.js     # 预加载脚本
-├── public/            # Web 前端
-│   ├── index.html
-│   ├── app.js
-│   └── styles.css
-├── img/               # 图标资源
-├── server.js          # Node.js 服务端（Web 模式用）
-├── capacitor.config.ts # Capacitor 配置
-└── package.json
+├── electron/                 # Electron desktop wrapper
+│   ├── main.js              # Main process (server + window)
+│   └── preload.js           # Context bridge for renderer
+├── public/                   # Frontend assets
+│   ├── index.html           # App shell
+│   ├── app.js               # Application logic
+│   └── styles.css           # Design system
+├── img/                      # Icons and assets
+├── server.js                 # Standalone Node.js server
+├── capacitor.config.ts       # Capacitor configuration
+├── package.json              # Dependencies & scripts
+└── README.md
 ```
 
-## 功能特性
+## Tech Stack
 
-- 图像生成（支持 gpt-image-2 和 codex-gpt-image-2 模型）
-- 多图参考（图生图）
-- 多种尺寸比例选择
-- 批量生成（1-10 张）
-- 历史记录管理
-- 本地图片存储（IndexedDB）
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | Vanilla HTML5 / CSS3 / ES6+ JavaScript |
+| **Desktop** | Electron 28 |
+| **Mobile** | Capacitor 5 |
+| **Backend** | Node.js HTTP Server |
+| **Storage** | IndexedDB + localStorage |
+| **Design** | Custom CSS with CSS Variables |
+| **Build** | electron-builder |
 
-## 配置
+## Design System
 
-### API Key
+The UI features a premium dark theme with:
 
-在应用界面中输入并保存 API Key。
+- **Glassmorphism** - Frosted glass effects with backdrop blur
+- **Gradient Accents** - Cyan (#00F5FF) to Purple (#A855F7) gradients
+- **Micro-animations** - Smooth transitions and hover effects
+- **Responsive Layout** - 3-panel layout with collapsible sidebar
+- **Keyboard Shortcuts** - Cmd+Enter to generate, Cmd+K to focus, Cmd+/ for theme
 
-### 自定义 API 端点
+## API Configuration
 
-设置环境变量：
+### Default Endpoint
+
+```
+https://www.zyflow.cn/v1/chat/completions
+```
+
+### Custom Endpoint
+
+Set environment variable before starting:
 
 ```bash
-export IMAGE2SVIP_API_URL="https://your-api-endpoint/v1/chat/completions"
+# macOS / Linux
+export IMAGE2SVIP_API_URL="https://your-api.com/v1/chat/completions"
+
+# Windows (PowerShell)
+$env:IMAGE2SVIP_API_URL = "https://your-api.com/v1/chat/completions"
 ```
 
-## 技术栈
+## Keyboard Shortcuts
 
-- 前端：原生 HTML/CSS/JavaScript
-- 桌面端：Electron
-- Android：Capacitor
-- 后端：Node.js HTTP Server
+| Shortcut | Action |
+|----------|--------|
+| `Cmd/Ctrl + Enter` | Generate image |
+| `Cmd/Ctrl + K` | Focus prompt input |
+| `Cmd/Ctrl + /` | Toggle dark/light theme |
+| `Escape` | Close modals / panels |
+
+## Development
+
+```bash
+# Run in development mode with DevTools
+npm run electron:dev
+
+# Run web server only
+npm start
+```
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## Acknowledgments
+
+- Built with Electron and Capacitor
+- UI inspired by Linear, Figma, and Arc Browser
+- Icons from Lucide
+
+---
+
+<p align="center">
+  Made with passion for creative AI
+</p>
